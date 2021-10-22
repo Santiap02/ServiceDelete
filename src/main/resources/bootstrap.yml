@@ -1,0 +1,10 @@
+spring:
+
+  application:
+    name: service-delete
+  cloud:
+    config:
+      uri: http://localhost:8888  #Localización Spring Cloud Config
+
+
+
