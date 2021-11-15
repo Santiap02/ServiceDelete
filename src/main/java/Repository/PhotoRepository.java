@@ -4,6 +4,8 @@ import Model.Photo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * Repositorio base de datos "Test4".
  *
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PhotoRepository extends MongoRepository<Photo, String> {
-    Photo findByClientId(int title);
+    Optional<Photo> findByClientId(int title);
     void deleteByClientId(int clientId);
 }
 

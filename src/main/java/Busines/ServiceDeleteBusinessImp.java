@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @AllArgsConstructor
 public class ServiceDeleteBusinessImp implements ServiceDeleteBusiness {
@@ -46,10 +44,10 @@ public class ServiceDeleteBusinessImp implements ServiceDeleteBusiness {
 
     @Override
     public ResponseDto<String> deletePhoto(int clientId) {
-        LOGGER.debug("Se inicia agregarCliente");
+        LOGGER.debug("Se inicia deletePhoto");
         ResponseDto<String> response;
         try {
-            var result= Optional.ofNullable(photoRepository.findByClientId(clientId)).orElseThrow(() -> new ServiceGetException(HttpStatus.NOT_FOUND.value(),
+            var result= photoRepository.findByClientId(clientId).orElseThrow(() -> new ServiceGetException(HttpStatus.NOT_FOUND.value(),
                     ServiceConstants.SA005, ServiceConstants.SA005M));
             photoRepository.deleteByClientId(clientId);
             response = new ResponseDto<>(HttpStatus.OK.value(), ServiceConstants.SA004, ServiceConstants.SA004M, result.getId());

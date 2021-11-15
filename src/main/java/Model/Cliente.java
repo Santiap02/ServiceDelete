@@ -5,7 +5,9 @@ package Model;
  * @author santiago.alvarezp@udea.edu.co
  *
  */
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -16,6 +18,8 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name="clientes")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cliente {
 
     @Id
