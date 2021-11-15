@@ -2,6 +2,7 @@ package com.example.ApplicationConfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+    static final String ADMIN = "ADMIN";
     //definición roles y usuarios
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -24,17 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .withUser("admin")
                     .password("{noop}admin")
-                    .roles("USER", "ADMIN");
+                    .roles("USER", ADMIN);
 
-
-		/*la seguiente configuración será para el caso de
-		 * usuarios en una base de datos
-		 * auth.jdbcAuthentication().dataSource(dataSource)
-        	.usersByUsernameQuery("select username, password, enabled"
-            	+ " from users where username=?")
-        	.authoritiesByUsernameQuery("select username, authority "
-            	+ "from authorities where username=?");
-		 */
     }
     //definición de políticas de seguridad
     @Override
@@ -43,8 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                 //solo los miembros del rol admin podrán realizar altas
                 //y para ver la lista de contactos, tendrán que estar autenticados
-                //.antMatchers(HttpMethod.POST,"/clientes/photos").hasRole("ADMIN")
-                .antMatchers("/clientes").authenticated()
+                .antMatchers(HttpMethod.DELETE,"/photos/").hasRole(ADMIN)
+                .antMatchers(HttpMethod.DELETE,"/clientes").hasRole(ADMIN)
                 //.antMatchers("/**").authenticated()
                 //.antMatchers("/contactos/**").authenticated()
                 .and()

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 @Import(SecurityConfig.class)
-@ComponentScan(basePackages = {"Rest","Model","Busines", "Repository"})
+@ComponentScan(basePackages = {"rest","Model","Busines", "Repository", "com.example.ApplicationConfig"})
 @EntityScan(basePackages = {"model"})
 @EnableJpaRepositories(basePackages = {"Repository"})
 @EnableMongoRepositories(basePackages = {"Repository"})

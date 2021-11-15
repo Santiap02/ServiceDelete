@@ -3,7 +3,7 @@ package Busines;
 import Domain.ResponseDto;
 
 public interface ServiceDeleteBusiness {
-    ResponseDto eliminarCliente(int idCliente);
-    ResponseDto DeleteByClientId(int clientId);
+    ResponseDto<String> deleteClient(int idCliente);
+    ResponseDto<String> deletePhoto(int clientId);
 
 }
