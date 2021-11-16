@@ -13,16 +13,16 @@ import java.io.Serializable;
  *
  * @param <T>
  */
-@NoArgsConstructor
+
 @Getter
 @Setter
+@NoArgsConstructor
 public class ResponseDto<T> implements Serializable {
 
     private int status;
     private String responseCode;
     private String responseMessage;
     private T data;
-
 
     public ResponseDto(int status, String responseCode, String responseMessage, T data) {
         this.status = status;
@@ -35,9 +35,4 @@ public class ResponseDto<T> implements Serializable {
         this(status, responseCode, responseMessage, null);
     }
 
-    @Override
-    public String toString() {
-        return "ResponseDto{" + "status=" + status + ", responseCode='" + responseCode + '\'' + ", responseMessage='" + responseMessage
-                + '\'' + ", data=" + data + '}';
-    }
 }

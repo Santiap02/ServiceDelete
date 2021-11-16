@@ -19,7 +19,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-
                 .inMemoryAuthentication()
                 .withUser("user1").password("{noop}user1") //lo de {noop} se pone para no obligar a usar mecanismo de encriptación
                 .roles("USER")
@@ -29,24 +28,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                     .roles("USER", ADMIN);
 
     }
-    //definición de políticas de seguridad
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                //solo los miembros del rol admin podrán realizar altas
-                //y para ver la lista de contactos, tendrán que estar autenticados
                 .antMatchers(HttpMethod.DELETE,"/photos/").hasRole(ADMIN)
                 .antMatchers(HttpMethod.DELETE,"/clientes").hasRole(ADMIN)
-                //.antMatchers("/**").authenticated()
-                //.antMatchers("/contactos/**").authenticated()
                 .and()
                 .httpBasic();
-
     }
+
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
 }

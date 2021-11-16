@@ -14,7 +14,9 @@ import java.util.Optional;
  */
 @Repository
 public interface PhotoRepository extends MongoRepository<Photo, String> {
+
     Optional<Photo> findByClientId(int title);
     void deleteByClientId(int clientId);
+
 }
 

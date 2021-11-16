@@ -8,7 +8,7 @@ package exception;
 
 
 
-public class ServiceGetException extends RuntimeException {
+public class ServiceException extends RuntimeException {
 
     /**
      * Serial version
@@ -26,18 +26,18 @@ public class ServiceGetException extends RuntimeException {
     /**
      * Constructor para la creacion de excepciones personalizadas sin causa raiz
      *
-     * @param status
-     * @param code
-     * @param message
+     * @param status estatus
+     * @param code código
+     * @param message mensaje
      */
-    public ServiceGetException(int status, String code, String message) {
+    public ServiceException(int status, String code, String message) {
         super(message);
         this.status = status;
         this.code = code;
     }
 
     /**
-     * Constructor para la creacion de excepciones personalizadas
+     * Constructor para la creación de excepciones personalizadas
      *
      * @param status
      *            Estado HTTP
@@ -48,12 +48,11 @@ public class ServiceGetException extends RuntimeException {
      * @param e
      *            Objeto con la informacion de la cauza raiz de la excepcion
      */
-    public ServiceGetException(int status, String code, String message, Throwable e) {
+    public ServiceException(int status, String code, String message, Throwable e) {
         super(message, e);
         this.status = status;
         this.code = code;
     }
-
 
     /**
      * @return the status

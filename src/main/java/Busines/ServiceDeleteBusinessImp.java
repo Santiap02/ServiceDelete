@@ -4,13 +4,16 @@ import Domain.ResponseDto;
 import Repository.ClientRepository;
 import Repository.PhotoRepository;
 import Util.ServiceConstants;
-import exception.ServiceGetException;
+import exception.ServiceException;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+/**
+ * @see ServiceDeleteBusiness
+ */
 @Service
 @AllArgsConstructor
 public class ServiceDeleteBusinessImp implements ServiceDeleteBusiness {
@@ -22,16 +25,19 @@ public class ServiceDeleteBusinessImp implements ServiceDeleteBusiness {
     /** Objeto para acceder a la capa de datos de fotos */
     private final PhotoRepository photoRepository;
 
+    /**
+     * @see ServiceDeleteBusiness#deleteClient(int) 
+     */
     @Override
     public ResponseDto<String> deleteClient(int idCliente) {
         LOGGER.debug("Se inicia deleteClient");
         ResponseDto<String> response;
         try {
-            var result =clientRepository.findById(idCliente).orElseThrow(() -> new ServiceGetException(HttpStatus.NOT_FOUND.value(),
+            var result =clientRepository.findById(idCliente).orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND.value(),
                     ServiceConstants.SA005, ServiceConstants.SA005M));
             clientRepository.deleteById(idCliente);
             response = new ResponseDto<>(HttpStatus.OK.value(), ServiceConstants.SA004, ServiceConstants.SA004M, result.getIdCliente().toString());
-        }catch (ServiceGetException e) {
+        }catch (ServiceException e) {
             LOGGER.error("Error in deleteClient", e);
             response = new ResponseDto<>(e.getStatus(), e.getCode(), e.getMessage());
         }catch (Exception e){
@@ -42,16 +48,19 @@ public class ServiceDeleteBusinessImp implements ServiceDeleteBusiness {
         return response;
     }
 
+    /**
+     * @see ServiceDeleteBusiness#deletePhoto(int) 
+     */
     @Override
     public ResponseDto<String> deletePhoto(int clientId) {
         LOGGER.debug("Se inicia deletePhoto");
         ResponseDto<String> response;
         try {
-            var result= photoRepository.findByClientId(clientId).orElseThrow(() -> new ServiceGetException(HttpStatus.NOT_FOUND.value(),
+            var result= photoRepository.findByClientId(clientId).orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND.value(),
                     ServiceConstants.SA005, ServiceConstants.SA005M));
             photoRepository.deleteByClientId(clientId);
             response = new ResponseDto<>(HttpStatus.OK.value(), ServiceConstants.SA004, ServiceConstants.SA004M, result.getId());
-        }catch (ServiceGetException e){
+        }catch (ServiceException e){
             LOGGER.error("Error in deletePhoto", e);
             response = new ResponseDto<>(e.getStatus(), e.getCode(), e.getMessage());
         }
